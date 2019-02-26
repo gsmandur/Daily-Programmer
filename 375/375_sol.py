@@ -5,6 +5,8 @@
 # Recursive backtracking solution
 # A solution only exists if there is an odd # of face up cards
 
+flipMap = {'.': '.', '0': '1', '1': '0'}
+
 # input: string of 0's and 1's
 # output: print order of cards to flip, or 'no solution' if can't complete game
 def cardFlipGame(cards: str):
@@ -58,15 +60,15 @@ def swapCard(cardsList: list, pos: int, newChar):
     #set card
     cardsList[pos] = newChar
 
-    # flip left neighbour if not already moved
-    if pos > 0 and cardsList[pos-1] != '.':
-        prevNeigh = cardsList[pos-1]
-        cardsList[pos-1] = '1' if prevNeigh == '0' else '0'
+    # flip neighbours
+    flip(cardsList, pos-1)
+    flip(cardsList, pos+1)
 
-    # flip right neighbour if not already moved
-    if pos < len(cardsList)-1 and cardsList[pos+1] != '.':
-        nextNeigh = cardsList[pos+1]
-        cardsList[pos+1] = '1' if nextNeigh == '0' else '0'
+# flip the card at position pos using the map
+def flip(cardsList: list, pos: int):
+    if 0 <= pos < len(cardsList):
+        cardsList[pos] = flipMap[cardsList[pos]]
+
 
 def main():
     # sample inputs
